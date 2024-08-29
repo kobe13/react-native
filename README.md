@@ -1,2 +1,1 @@
-# react-native
-react native playground
+# This is my [React Native](https://reactnative.dev/) playground.
