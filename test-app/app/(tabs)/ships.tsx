@@ -1,11 +1,27 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { StyleSheet } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
+import { useQuery, gql } from "@apollo/client";
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { ShipsList } from "@/components/ShipsList";
+import { ShipsData } from "@/types";
 
-export default function TestScreen() {
+const GET_SHIPS = gql`
+  query Ships($limit: Int) {
+    ships(limit: $limit) {
+      id
+      name
+    }
+  }
+`;
+
+export default function Ships() {
+  const { data, loading, error } = useQuery<ShipsData>(GET_SHIPS, {
+    variables: { limit: 5 },
+  });
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
@@ -14,8 +30,11 @@ export default function TestScreen() {
       }
     >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Test Screen</ThemedText>
+        <ThemedText type="title">Ships</ThemedText>
       </ThemedView>
+      {loading && <ThemedText>Loading...</ThemedText>}
+      {error && <ThemedText>Error: {error.message}</ThemedText>}
+      <ShipsList ships={data?.ships} />
     </ParallaxScrollView>
   );
 }
@@ -30,5 +49,9 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
     gap: 8,
+  },
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
   },
 });

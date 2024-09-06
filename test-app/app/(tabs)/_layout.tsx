@@ -28,9 +28,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="test-screen"
+        name="ships"
         options={{
-          title: "Test",
+          title: "Ships",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "prism" : "prism-outline"}
