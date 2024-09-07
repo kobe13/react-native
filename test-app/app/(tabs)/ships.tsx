@@ -9,23 +9,24 @@ import { ShipsList } from "@/components/ShipsList";
 import { ShipsData } from "@/types";
 
 const GET_SHIPS = gql`
-  query Ships($limit: Int) {
-    ships(limit: $limit) {
+  query Ships($limit: Int, $offset: Int) {
+    ships(limit: $limit, offset: $offset) {
       id
       name
+      image
     }
   }
 `;
 
 export default function Ships() {
   const { data, loading, error } = useQuery<ShipsData>(GET_SHIPS, {
-    variables: { limit: 5 },
+    variables: { limit: 5, offset: 5 },
   });
 
   return (
     <>
       <ParallaxScrollView
-        headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
+        headerBackgroundColor={{ light: "#A1CEDC", dark: "#353636" }}
         headerImage={
           <Ionicons size={310} name="prism" style={styles.headerImage} />
         }
@@ -43,7 +44,7 @@ export default function Ships() {
 
 const styles = StyleSheet.create({
   headerImage: {
-    color: "#808080",
+    color: "#087EA4",
     bottom: -90,
     left: -35,
     position: "absolute",
