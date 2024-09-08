@@ -7,7 +7,9 @@ export function ShipsList({ ships }: ShipsData) {
     <SafeAreaView style={styles.container}>
       <FlatList
         data={ships}
-        renderItem={({ item }) => <Ship name={item.name} image={item.image} />}
+        renderItem={({ item }) => (
+          <Ship id={item.id} name={item.name} image={item.image} />
+        )}
         keyExtractor={(item) => item.id}
         numColumns={1}
       />
